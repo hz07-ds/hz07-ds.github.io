@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/20/555/">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/20/week1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -189,7 +189,202 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/20/555/" class="post-title-link" itemprop="url">栈迁移原理与实战</a>
+          <a href="/2026/04/20/week1/" class="post-title-link" itemprop="url">week1pwn题</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-04-20 20:33:00 / 修改时间：20:56:02" itemprop="dateCreated datePublished" datetime="2026-04-20T20:33:00+08:00">2026-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>西电ctf Newstar2025 week1 pwn题。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/20/week1/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/20/111/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/20/111/" class="post-title-link" itemprop="url">常见保护机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-20 20:32:28" itemprop="dateCreated datePublished" datetime="2026-04-20T20:32:28+08:00">2026-04-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>## 一、保护机制总览</p>
+<h1 id="🛡️-常见保护机制"><a href="#🛡️-常见保护机制" class="headerlink" title="🛡️ 常见保护机制"></a>🛡️ 常见保护机制</h1><table>
+<thead>
+<tr>
+<th>保护</th>
+<th>作用</th>
+<th>影响</th>
+<th>绕过</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NX</td>
+<td>栈不可执行</td>
+<td>❌ shellcode</td>
+<td>ret2libc &#x2F; ROP</td>
+</tr>
+<tr>
+<td>Canary</td>
+<td>栈保护</td>
+<td>❌ 覆盖返回地址会崩溃</td>
+<td>leak</td>
+</tr>
+<tr>
+<td>PIE</td>
+<td>程序地址随机</td>
+<td>❌ 地址不固定</td>
+<td>leak</td>
+</tr>
+<tr>
+<td>ASLR</td>
+<td>内存地址随机</td>
+<td>❌ libc&#x2F;栈地址变化</td>
+<td>leak</td>
+</tr>
+<tr>
+<td>RELRO</td>
+<td>保护 GOT 表</td>
+<td>❌ Full 不可改 GOT</td>
+<td>ROP</td>
+</tr>
+</tbody></table>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/20/%E6%A0%88%E8%BF%81%E7%A7%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/20/%E6%A0%88%E8%BF%81%E7%A7%BB/" class="post-title-link" itemprop="url">栈迁移原理与实战</a>
         </h2>
 
         <div class="post-meta-container">
@@ -226,7 +421,7 @@
           <p>栈迁移（Stack Migration）是二进制漏洞利用中的一项重要技术，当栈空间不足或栈不可用时，将执行流转移到可控内存区域。本文通过实例讲解其原理与实现。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2026/04/20/555/#more" rel="contents">
+              <a class="btn" href="/2026/04/20/%E6%A0%88%E8%BF%81%E7%A7%BB/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

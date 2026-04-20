@@ -20,28 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yourdomain.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="个人博客，记录技术、生活和思考">
-<meta property="og:type" content="website">
-<meta property="og:title" content="林夏的博客">
-<meta property="og:url" content="https://yourdomain.com/tags/Canary/index.html">
+    <meta name="description" content="西电ctf Newstar2025 week1 pwn题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="week1pwn题">
+<meta property="og:url" content="https://yourdomain.com/2026/04/20/week1/index.html">
 <meta property="og:site_name" content="林夏的博客">
-<meta property="og:description" content="个人博客，记录技术、生活和思考">
+<meta property="og:description" content="西电ctf Newstar2025 week1 pwn题。">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-20T12:33:00.000Z">
+<meta property="article:modified_time" content="2026-04-20T12:56:02.130Z">
 <meta property="article:author" content="林夏">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="分享">
-<meta property="article:tag" content="博客">
-<meta property="article:tag" content="技术">
+<meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yourdomain.com/tags/Canary/">
+<link rel="canonical" href="https://yourdomain.com/2026/04/20/week1/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/Canary/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yourdomain.com/2026/04/20/week1/","path":"2026/04/20/week1/","title":"week1pwn题"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>标签: Canary | 林夏的博客</title>
+<title>week1pwn题 | 林夏的博客</title>
   
 
 
@@ -111,7 +110,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -124,6 +123,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-gun-debugger"><span class="nav-number">1.</span> <span class="nav-text">一. gun-debugger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-intbug"><span class="nav-number">2.</span> <span class="nav-text">二.intbug</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,50 +161,129 @@
 
     </div>
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">Canary
-          <small>标签</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/20/week1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="week1pwn题 | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          week1pwn题
         </h1>
-      </div>
 
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2026</span>
+
+      <time title="创建时间：2026-04-20 20:33:00 / 修改时间：20:56:02" itemprop="dateCreated datePublished" datetime="2026-04-20T20:33:00+08:00">2026-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>西电ctf Newstar2025 week1 pwn题。</p>
+<span id="more"></span>
+<h2 id="一-gun-debugger"><a href="#一-gun-debugger" class="headerlink" title="一. gun-debugger"></a>一. gun-debugger</h2><p>根据文件自带的说明并使用WebSocketReflectorX后，在虚拟机中运行程序。</p>
+<ol>
+<li><strong>第一步找到r12中的值</strong>:我忘记了哈哈</li>
+<li><strong>第二步运用x&#x2F;s 这个指令找出那个地址里存的信息</strong>:GDB_IS_POWERFUL,这个我记得。</li>
+<li>**第三步给那个地址下断点，再运行就可 **:就是要重新前俩步。</li>
+<li><strong>最后就是运用set {int}0x7fffffffdbf4 &#x3D; 0xdeadbeef这个命令按要求替换</strong>:记得连上远端按照开局run ip 端口进入程序，然后就可拿到flag。</li>
+</ol>
+<h2 id="二-intbug"><a href="#二-intbug" class="headerlink" title="二.intbug"></a>二.intbug</h2><p>这个先用指令检查保护等信息，然后拖入ida中。</p>
+<ol>
+<li><strong>进行反编译然后进入func函数中</strong> : 然后进行分析，发现其核心功能是输入数字校验并触发flag读取。</li>
+<li><strong>__int16</strong>:__int16  是16位有符号整数，它在内存里用 16个二进制位 来存储数据，其中：</li>
+</ol>
+<ul>
+<li>最高位（第16位）是符号位： 0  表示正数， 1  表示负数。<br>​</li>
+<li>剩下的15位用来存数值的绝对值。</li>
+</ul>
+<p>所以它的取值范围是：</p>
+<ul>
+<li>最大正数： 0111 1111 1111 1111 （二进制） → 对应十进制 32767<br>​</li>
+<li>最小负数： 1000 0000 0000 0000 （二进制） → 对应十进制 -32768。</li>
+</ul>
+<ol start="3">
+<li><strong>当32767加1会进行补码</strong>:根据补码原则，这个二进制数代表的十进制值是 -32768。</li>
+<li><strong>然后构建脚本</strong>:<br>from pwn import *</li>
+</ol>
+<p>#r &#x3D; process(“.&#x2F;ig”)<br>r&#x3D;remote(“127.0.0.1”,44519)<br>r.recvuntil(b”welcome to NewStarCTF2025!\n\n”)</p>
+<p>payload &#x3D; b”1”</p>
+<p>for i in range(32767):<br>    r.sendline(payload)<br>r.interactive()<br>5. <strong>拿到flag</strong></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-16T20:17:00+08:00"
-              content="2026-04-16">
-          04-16
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/16/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" itemprop="url">
-            <span itemprop="name">常见保护机制详解（Pwn 学习笔记）</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"># pwn</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/20/111/" rel="prev" title="常见保护机制">
+                  <i class="fa fa-angle-left"></i> 常见保护机制
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>

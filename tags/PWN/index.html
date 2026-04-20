@@ -20,15 +20,13 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yourdomain.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="title: 格式化字符串漏洞详解（原理与利用）  📖 点击展开全文  ## 一、保护机制总览 🛡️ 常见保护机制   保护 作用 影响 绕过    NX 栈不可执行 ❌ shellcode ret2libc &#x2F; ROP   Canary 栈保护 ❌ 覆盖返回地址会崩溃 leak   PIE 程序地址随机 ❌ 地址不固定 leak   ASLR 内存地址随机 ❌ libc&amp;#x2F">
-<meta property="og:type" content="article">
+    <meta name="description" content="个人博客，记录技术、生活和思考">
+<meta property="og:type" content="website">
 <meta property="og:title" content="林夏的博客">
-<meta property="og:url" content="https://yourdomain.com/2025/11/22/111/index.html">
+<meta property="og:url" content="https://yourdomain.com/tags/PWN/index.html">
 <meta property="og:site_name" content="林夏的博客">
-<meta property="og:description" content="title: 格式化字符串漏洞详解（原理与利用）  📖 点击展开全文  ## 一、保护机制总览 🛡️ 常见保护机制   保护 作用 影响 绕过    NX 栈不可执行 ❌ shellcode ret2libc &#x2F; ROP   Canary 栈保护 ❌ 覆盖返回地址会崩溃 leak   PIE 程序地址随机 ❌ 地址不固定 leak   ASLR 内存地址随机 ❌ libc&amp;#x2F">
+<meta property="og:description" content="个人博客，记录技术、生活和思考">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-11-22T12:40:13.578Z">
-<meta property="article:modified_time" content="2026-04-16T12:09:12.444Z">
 <meta property="article:author" content="林夏">
 <meta property="article:tag" content="Hexo">
 <meta property="article:tag" content="分享">
@@ -37,13 +35,13 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yourdomain.com/2025/11/22/111/">
+<link rel="canonical" href="https://yourdomain.com/tags/PWN/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yourdomain.com/2025/11/22/111/","path":"2025/11/22/111/","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"tags/PWN/index.html","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title> | 林夏的博客</title>
+<title>标签: PWN | 林夏的博客</title>
   
 
 
@@ -113,7 +111,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -126,7 +124,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%F0%9F%9B%A1%EF%B8%8F-%E5%B8%B8%E8%A7%81%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6"><span class="nav-number">1.</span> <span class="nav-text">🛡️ 常见保护机制</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -164,142 +161,50 @@
 
     </div>
 
-    <div class="main-inner post posts-expand">
+    <div class="main-inner tag posts-collapse">
 
 
   
-
-
-<div class="post-block">
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2025/11/22/111/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
+  <div class="post-block">
+    <div class="post-content">
+      <div class="collection-title">
+        <h1 class="collection-header">PWN
+          <small>标签</small>
         </h1>
+      </div>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-11-22 20:40:13" itemprop="dateCreated datePublished" datetime="2025-11-22T20:40:13+08:00">2025-11-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-16 20:09:12" itemprop="dateModified" datetime="2026-04-16T20:09:12+08:00">2026-04-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody"><hr>
-<p>title: 格式化字符串漏洞详解（原理与利用）</p>
-<details>
-<summary>📖 点击展开全文</summary>
-
-<p>## 一、保护机制总览</p>
-<h1 id="🛡️-常见保护机制"><a href="#🛡️-常见保护机制" class="headerlink" title="🛡️ 常见保护机制"></a>🛡️ 常见保护机制</h1><table>
-<thead>
-<tr>
-<th>保护</th>
-<th>作用</th>
-<th>影响</th>
-<th>绕过</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NX</td>
-<td>栈不可执行</td>
-<td>❌ shellcode</td>
-<td>ret2libc &#x2F; ROP</td>
-</tr>
-<tr>
-<td>Canary</td>
-<td>栈保护</td>
-<td>❌ 覆盖返回地址会崩溃</td>
-<td>leak</td>
-</tr>
-<tr>
-<td>PIE</td>
-<td>程序地址随机</td>
-<td>❌ 地址不固定</td>
-<td>leak</td>
-</tr>
-<tr>
-<td>ASLR</td>
-<td>内存地址随机</td>
-<td>❌ libc&#x2F;栈地址变化</td>
-<td>leak</td>
-</tr>
-<tr>
-<td>RELRO</td>
-<td>保护 GOT 表</td>
-<td>❌ Full 不可改 GOT</td>
-<td>ROP</td>
-</tr>
-</tbody></table>
-
+      
+    <div class="collection-year">
+      <span class="collection-header">2026</span>
     </div>
 
-    
-    
-    
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta-container">
+        <time itemprop="dateCreated"
+              datetime="2026-04-16T20:17:00+08:00"
+              content="2026-04-16">
+          04-16
+        </time>
+      </div>
 
-    <footer class="post-footer">
+      <div class="post-title">
+          <a class="post-title-link" href="/2026/04/16/23/" itemprop="url">
+            <span itemprop="name">常见保护机制详解（Pwn 学习笔记）</span>
+          </a>
+      </div>
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2025/11/22/hello-world/" rel="prev" title="re2text&amp;&amp;re2shellcode">
-                  <i class="fa fa-angle-left"></i> re2text&&re2shellcode
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2026/04/13/22/" rel="next" title="格式化字符串漏洞详解（原理与利用）">
-                  格式化字符串漏洞详解（原理与利用） <i class="fa fa-angle-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+      
+    </header>
   </article>
-</div>
 
-
-
-
-
+    </div>
+  </div>
+  
+  
+  
 
 </div>
   </main>

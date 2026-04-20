@@ -304,5 +304,19 @@
   <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
 </noscript>
 
+  <script>
+document.addEventListener('DOMContentLoaded', function() {
+  var postBlocks = document.querySelectorAll('.posts-expand .post-block');
+  postBlocks.forEach(function(block) {
+    var header = block.querySelector('.post-header');
+    if (header) {
+      header.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') return;
+        block.classList.toggle('expanded');
+      });
+    }
+  });
+});
+</script>
 </body>
 </html>

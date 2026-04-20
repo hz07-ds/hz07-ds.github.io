@@ -1385,7 +1385,7 @@ pre code {
     vertical-align: middle;
   }
   .links-of-author a::before {
-    background: #ff45b4;
+    background: #0bff4b;
     display: inline-block;
     margin-right: 3px;
     transform: translateY(-2px);
@@ -2334,6 +2334,40 @@ pre code {
   to {
     transform: rotateZ(-30deg);
   }
+}
+.posts-expand .post-block {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  background: var(--content-bg-color);
+}
+.posts-expand .post-block:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+.post-block .post-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0 20px;
+}
+.post-block.expanded .post-body {
+  max-height: 2000px;
+  padding: 20px;
+}
+.post-block .post-header {
+  cursor: pointer;
+  user-select: none;
+}
+.post-block .post-header:after {
+  content: "▼";
+  float: right;
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+.post-block.expanded .post-header:after {
+  transform: rotate(180deg);
 }
 .category-all-page .category-all-title {
   text-align: center;

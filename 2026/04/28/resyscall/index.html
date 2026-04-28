@@ -20,28 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yourdomain.com","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="个人博客，记录技术、生活和思考">
-<meta property="og:type" content="website">
-<meta property="og:title" content="林夏的博客">
-<meta property="og:url" content="https://yourdomain.com/archives/2026/04/index.html">
+    <meta name="description" content="1.系统调用 **定义：系统调用是操作系统提供给应用程序的一种接口，允许应用程序操作系统执行特权指令，如文件操作、网络通信、进程管理等。  x86通过 int 0x80 指令进行系统调用、amd64通过syscall 指令进行系统调用。 **特点：应用程序通过软中断（software interrupt）或指令触发系统调用。系统调用提供了用户空间程序与内核空间之间的交互方式。典型的系统调用包括r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="resyscall">
+<meta property="og:url" content="https://yourdomain.com/2026/04/28/resyscall/index.html">
 <meta property="og:site_name" content="林夏的博客">
-<meta property="og:description" content="个人博客，记录技术、生活和思考">
+<meta property="og:description" content="1.系统调用 **定义：系统调用是操作系统提供给应用程序的一种接口，允许应用程序操作系统执行特权指令，如文件操作、网络通信、进程管理等。  x86通过 int 0x80 指令进行系统调用、amd64通过syscall 指令进行系统调用。 **特点：应用程序通过软中断（software interrupt）或指令触发系统调用。系统调用提供了用户空间程序与内核空间之间的交互方式。典型的系统调用包括r">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-04-28T12:33:00.000Z">
+<meta property="article:modified_time" content="2026-04-28T09:13:52.188Z">
 <meta property="article:author" content="林夏">
-<meta property="article:tag" content="Hexo">
-<meta property="article:tag" content="分享">
-<meta property="article:tag" content="博客">
-<meta property="article:tag" content="技术">
+<meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://yourdomain.com/archives/2026/04/">
+<link rel="canonical" href="https://yourdomain.com/2026/04/28/resyscall/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/2026/04/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yourdomain.com/2026/04/28/resyscall/","path":"2026/04/28/resyscall/","title":"resyscall"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>归档 | 林夏的博客</title>
+<title>resyscall | 林夏的博客</title>
   
 
 
@@ -88,7 +87,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">林夏的博客</h1>
+      <p class="site-title">林夏的博客</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">学习、分享与记录</p>
@@ -111,7 +110,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -124,6 +123,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">1.系统调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%BF%94%E5%9B%9E%E5%AF%BC%E5%90%91%E7%BC%96%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">2.返回导向编程</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -161,209 +161,110 @@
 
     </div>
 
-    <div class="main-inner archive posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
-  
-  
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <span class="collection-header">嗯..! 目前共计 11 篇日志。 继续努力。</span>
-      </div>
 
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/28/resyscall/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="resyscall | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          resyscall
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
       
-    <div class="collection-year">
-      <span class="collection-header">2026<span class="collection-year-count">9</span></span>
+
+      <time title="创建时间：2026-04-28 20:33:00 / 修改时间：17:13:52" itemprop="dateCreated datePublished" datetime="2026-04-28T20:33:00+08:00">2026-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><span id="more"></span>
+<h2 id="1-系统调用"><a href="#1-系统调用" class="headerlink" title="1.系统调用"></a>1.系统调用</h2><ol>
+<li>**定义：系统调用是操作系统提供给应用程序的一种接口，允许应用程序操作系统执行特权指令，如文件操作、网络通信、进程管理等。<br>  x86通过 int 0x80 指令进行系统调用、amd64通过syscall 指令进行系统调用。</li>
+<li>**特点：应用程序通过软中断（software interrupt）或指令触发系统调用。系统调用提供了用户空间程序与内核空间之间的交互方式。典型的系统调用包括read、 write、 open、close等。</li>
+</ol>
+<h2 id="2-返回导向编程"><a href="#2-返回导向编程" class="headerlink" title="2.返回导向编程"></a>2.返回导向编程</h2><ol>
+<li><p>**定义：ROP是一种漏洞利用技术，利用程序的已有代码片段(即 gadgets)来构建攻击payload，而不是注入新的代码。这对于执行非执行区域(NX, No eXecute)的内存非常有用。</p>
+</li>
+<li><p>**特点：利用程序中已有的代码片段，这些片段通常是函数的结尾，包含ret指令。将这些片段链接在一起，形成攻击payload，用于执行恶意操作。ROP通常用于绕过 DEP(Data Execution Prevention)等安全机制。</p>
+</li>
+</ol>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-28T20:33:00+08:00"
-              content="2026-04-28">
-          04-28
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/28/resyscall/" itemprop="url">
-            <span itemprop="name">resyscall</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/pwn/" rel="tag"># pwn</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/04/22/week%E4%B8%8A2/" rel="prev" title="week2pwn题上">
+                  <i class="fa fa-angle-left"></i> week2pwn题上
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-22T20:33:00+08:00"
-              content="2026-04-22">
-          04-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/22/week%E4%B8%8A2/" itemprop="url">
-            <span itemprop="name">week2pwn题上</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-22T20:33:00+08:00"
-              content="2026-04-22">
-          04-22
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/22/week2%E4%B8%8B/" itemprop="url">
-            <span itemprop="name">week2pwn题下</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-21T00:00:00+08:00"
-              content="2026-04-21">
-          04-21
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/21/%E6%88%91%E7%9A%84%E6%8C%87%E4%BB%A4/" itemprop="url">
-            <span itemprop="name">我的指令</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-20T20:33:00+08:00"
-              content="2026-04-20">
-          04-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/20/week1/" itemprop="url">
-            <span itemprop="name">week1pwn题</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-20T20:32:28+08:00"
-              content="2026-04-20">
-          04-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/20/111/" itemprop="url">
-            <span itemprop="name">常见保护机制</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-20T20:30:00+08:00"
-              content="2026-04-20">
-          04-20
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/20/%E6%A0%88%E8%BF%81%E7%A7%BB/" itemprop="url">
-            <span itemprop="name">栈迁移原理与实战</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-16T20:17:00+08:00"
-              content="2026-04-16">
-          04-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/16/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" itemprop="url">
-            <span itemprop="name">常见保护机制详解（Pwn 学习笔记）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2026-04-13T20:00:00+08:00"
-              content="2026-04-13">
-          04-13
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2026/04/13/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" itemprop="url">
-            <span itemprop="name">格式化字符串漏洞详解（原理与利用）</span>
-          </a>
-      </div>
-
-      
-    </header>
-  </article>
+</div>
 
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
 
 </div>
   </main>

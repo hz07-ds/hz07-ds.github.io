@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week2%E4%B8%8B/">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/28/resyscall/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -189,7 +189,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/22/week2%E4%B8%8B/" class="post-title-link" itemprop="url">week2pwn题下</a>
+          <a href="/2026/04/28/resyscall/" class="post-title-link" itemprop="url">resyscall</a>
         </h2>
 
         <div class="post-meta-container">
@@ -199,15 +199,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2026-04-22 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-22T20:33:00+08:00">2026-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-28 15:23:10" itemprop="dateModified" datetime="2026-04-28T15:23:10+08:00">2026-04-28</time>
+      <time title="创建时间：2026-04-28 20:33:00 / 修改时间：17:13:52" itemprop="dateCreated datePublished" datetime="2026-04-28T20:33:00+08:00">2026-04-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -229,15 +223,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>buu的题</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/04/22/week2%E4%B8%8B/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
+          <span id="more"></span>
+<h2 id="1-系统调用"><a href="#1-系统调用" class="headerlink" title="1.系统调用"></a>1.系统调用</h2><ol>
+<li>**定义：系统调用是操作系统提供给应用程序的一种接口，允许应用程序操作系统执行特权指令，如文件操作、网络通信、进程管理等。<br>  x86通过 int 0x80 指令进行系统调用、amd64通过syscall 指令进行系统调用。</li>
+<li>**特点：应用程序通过软中断（software interrupt）或指令触发系统调用。系统调用提供了用户空间程序与内核空间之间的交互方式。典型的系统调用包括read、 write、 open、close等。</li>
+</ol>
+<h2 id="2-返回导向编程"><a href="#2-返回导向编程" class="headerlink" title="2.返回导向编程"></a>2.返回导向编程</h2><ol>
+<li><p>**定义：ROP是一种漏洞利用技术，利用程序的已有代码片段(即 gadgets)来构建攻击payload，而不是注入新的代码。这对于执行非执行区域(NX, No eXecute)的内存非常有用。</p>
+</li>
+<li><p>**特点：利用程序中已有的代码片段，这些片段通常是函数的结尾，包含ret指令。将这些片段链接在一起，形成攻击payload，用于执行恶意操作。ROP通常用于绕过 DEP(Data Execution Prevention)等安全机制。</p>
+</li>
+</ol>
+
       
     </div>
 
@@ -325,6 +322,98 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/04/22/week%E4%B8%8A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week2%E4%B8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/22/week2%E4%B8%8B/" class="post-title-link" itemprop="url">week2pwn题下</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-22 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-22T20:33:00+08:00">2026-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-28 15:23:10" itemprop="dateModified" datetime="2026-04-28T15:23:10+08:00">2026-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>buu的题</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/22/week2%E4%B8%8B/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1201,93 +1290,9 @@ printf(input); // 如果用户输入了 &quot;%x%x%s&quot;，程序就会暴露�
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2025/11/22/re2text%E5%92%8Cshellcode/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/11/22/re2text%E5%92%8Cshellcode/" class="post-title-link" itemprop="url">re2text&&re2shellcode</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-11-22 20:22:18" itemprop="dateCreated datePublished" datetime="2025-11-22T20:22:18+08:00">2025-11-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-20 20:16:05" itemprop="dateModified" datetime="2026-04-20T20:16:05+08:00">2026-04-20</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p># ret2text 与 ret2shellcode 知识总结</p>
-<p>## 一、ret2text</p>
-<p>### 📌 定义<br>返回到程序本身的代码段（text段）执行已有函数。</p>
-<p>### 📌 利用条件<br>- 程序中存在可利用函数（如 <code>win()</code>、<code>system()</code>）<br>- 不依赖可执行栈（NX 可开）</p>
-<p>### 📌 利用流程</p>
-<ol>
-<li>找到溢出点</li>
-<li>覆盖返回地址（RET）</li>
-<li>将 RET 修改为目标函数地址</li>
-</ol>
-<p>### 📌 示例<br>`&#96;&#96;c<br>void win() {<br>    system(“&#x2F;bin&#x2F;sh”);<br>}</p>
-<p>padding + win_addr</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
 
 </div>
   </main>

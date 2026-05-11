@@ -171,90 +171,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/re2libc/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/07/re2libc/" class="post-title-link" itemprop="url">re2libc</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2026-05-07 20:00:00 / 修改时间：20:54:45" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="re2libc"><a href="#re2libc" class="headerlink" title="re2libc"></a>re2libc</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>  ret2libc这种攻击方式主要是针对动态链接(Dynamic linking)编译的程序，因为正常情况下是无法在程序中找到像system()、 execve()这种系统级函数（如果程序中直接包含了这种函数就可以直接控制返回地址指向他们，而不用通过这种麻烦的方式。</p>
-<h2 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h2><p>  现代操作系统为了增加系统的安全性,采取了ASLR和NX等安全措施，以防止恶意代码的注入和执行。通过retzlibc攻击，攻击者可以利用己加载到内存中的标准c库函数从而完成对系统的攻击。</p>
-<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>  动态链接是指在程序装载时通过动态链接器将程序所需的所有动态链接 Dynamic linking library)装载至进程空间中(程序按照模块拆分成各个相对独立的部分)，    当程序运行时才将他们链接在一一起形成一个完整程序的过程。<br>  动态链接的优点：1.节约内存；2，共享库文件；3，灵活更新；4，减小可执行文件大小；</p>
-<h2 id="got表和plt表"><a href="#got表和plt表" class="headerlink" title="got表和plt表"></a>got表和plt表</h2><p> 就是利用某个可打印东西的函数，打印出另一个函数在Go表中的地址,GOT(Global Offset Table,全局偏移表)是Linux ELF文件中用于定位全局变量和函数的一个表。PLT(Procedure Linkage Table,过程链接表)是Linux ELF文件中用于延迟绑定的表。</p>
-<h2 id="延迟绑定"><a href="#延迟绑定" class="headerlink" title="延迟绑定"></a>延迟绑定</h2><p> 所谓延迟绑定，就是当函数第一次被调用的时候才进行绑定（包括符号查找、重定位等）,如果函数从来没有用到过就不进行绑定。基于延迟绑定可以大大加快程序的启动速度，特别有利于-一些引用了大量函数的程序。</p>
-<h2 id="计算libc基址-固定公式"><a href="#计算libc基址-固定公式" class="headerlink" title="计算libc基址(固定公式)"></a>计算libc基址(固定公式)</h2><p>  函数在libc中的偏移地址可以用python pwntools中的函数libc. symbols[‘puts]函数进行计算<br> libc基地址  &#x3D;函数实际地址-函数在libc库中的偏移地址<br> system_addr &#x3D; libc基地址    + system在I ibc库中的偏移地址<br>  puts_addr  &#x3D; libc基地址    +puts在libc库中的偏移地址</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/nss/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -283,9 +199,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2026-05-07 20:00:00 / 修改时间：20:40:28" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
+      <time title="创建时间：2026-05-07 20:00:00" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-05-11 19:30:45" itemprop="dateModified" datetime="2026-05-11T19:30:45+08:00">2026-05-11</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,7 +229,98 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
+          <span id="more"></span>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/re2libc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/07/re2libc/" class="post-title-link" itemprop="url">re2libc</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-07 20:00:00" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-05-11 19:30:22" itemprop="dateModified" datetime="2026-05-11T19:30:22+08:00">2026-05-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <span id="more"></span>
+<h1 id="re2libc"><a href="#re2libc" class="headerlink" title="re2libc"></a>re2libc</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>  ret2libc这种攻击方式主要是针对动态链接(Dynamic linking)编译的程序，因为正常情况下是无法在程序中找到像system()、 execve()这种系统级函数（如果程序中直接包含了这种函数就可以直接控制返回地址指向他们，而不用通过这种麻烦的方式。</p>
+<h2 id="使用原因"><a href="#使用原因" class="headerlink" title="使用原因"></a>使用原因</h2><p>  现代操作系统为了增加系统的安全性,采取了ASLR和NX等安全措施，以防止恶意代码的注入和执行。通过retzlibc攻击，攻击者可以利用己加载到内存中的标准c库函数从而完成对系统的攻击。</p>
+<h2 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h2><p>  动态链接是指在程序装载时通过动态链接器将程序所需的所有动态链接 Dynamic linking library）装载至进程空间中(程序按照模块拆分成各个相对独立的部分)，    当程序运行时才将他们链接在一一起形成一个完整程序的过程。<br>  动态链接的优点：1.节约内存；2，共享库文件；3，灵活更新；4，减小可执行文件大小；</p>
+<h2 id="got表和plt表"><a href="#got表和plt表" class="headerlink" title="got表和plt表"></a>got表和plt表</h2><p> 就是利用某个可打印东西的函数，打印出另一个函数在Go表中的地址,GOT(Global Offset Table,全局偏移表)是Linux ELF文件中用于定位全局变量和函数的一个表。PLT(Procedure Linkage Table,过程链接表)是Linux ELF文件中用于延迟绑定的表。</p>
+<h2 id="延迟绑定"><a href="#延迟绑定" class="headerlink" title="延迟绑定"></a>延迟绑定</h2><p> 所谓延迟绑定，就是当函数第一次被调用的时候才进行绑定（包括符号查找、重定位等）,如果函数从来没有用到过就不进行绑定。基于延迟绑定可以大大加快程序的启动速度，特别有利于-一些引用了大量函数的程序。</p>
+<h2 id="计算libc基址-固定公式"><a href="#计算libc基址-固定公式" class="headerlink" title="计算libc基址(固定公式)"></a>计算libc基址(固定公式)</h2><p>  函数在libc中的偏移地址可以用python pwntools中的函数libc. symbols[‘puts]函数进行计算<br> libc基地址  &#x3D;函数实际地址-函数在libc库中的偏移地址<br> system_addr &#x3D; libc基地址    + system在I ibc库中的偏移地址<br>  puts_addr  &#x3D; libc基地址    +puts在libc库中的偏移地址</p>
+
       
     </div>
 
@@ -422,98 +435,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week%E4%B8%8A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/22/week%E4%B8%8A2/" class="post-title-link" itemprop="url">week2pwn题上</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-04-22 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-22T20:33:00+08:00">2026-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-28 15:23:25" itemprop="dateModified" datetime="2026-04-28T15:23:25+08:00">2026-04-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>buu的题</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/04/22/week%E4%B8%8A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week2%E4%B8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -576,6 +497,98 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/04/22/week2%E4%B8%8B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week%E4%B8%8A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/22/week%E4%B8%8A2/" class="post-title-link" itemprop="url">week2pwn题上</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-22 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-22T20:33:00+08:00">2026-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-28 15:23:25" itemprop="dateModified" datetime="2026-04-28T15:23:25+08:00">2026-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>buu的题</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/22/week%E4%B8%8A2/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

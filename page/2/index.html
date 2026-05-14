@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -162,6 +162,252 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/16/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/16/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6/" class="post-title-link" itemprop="url">常见保护机制详解（Pwn 学习笔记）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-16 20:17:00" itemprop="dateCreated datePublished" datetime="2026-04-16T20:17:00+08:00">2026-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-20 19:27:01" itemprop="dateModified" datetime="2026-04-20T19:27:01+08:00">2026-04-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">网络安全</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="一、保护机制总览表"><a href="#一、保护机制总览表" class="headerlink" title="一、保护机制总览表"></a>一、保护机制总览表</h2><table>
+<thead>
+<tr>
+<th>保护</th>
+<th>作用</th>
+<th>影响</th>
+<th>典型绕过</th>
+<th>原理简述</th>
+<th>检测命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>NX</strong></td>
+<td>栈 &#x2F; 堆 不可执行</td>
+<td>❌ 无法直接执行 shellcode</td>
+<td>ret2libc、ROP、JOP</td>
+<td>页表标志位 <code>PTE_X</code> 缺失，CPU 无法执行代码段</td>
+<td><code>readelf -l ./bin | grep STACK</code></td>
+</tr>
+<tr>
+<td><strong>Canary</strong></td>
+<td>栈溢出检测</td>
+<td>❌ 覆盖返回地址前会触发 __stack_chk_fail</td>
+<td>泄露 Canary、覆盖 TCB 中的值、One-by-one 爆破</td>
+<td>在 ebp&#x2F;rbp 与返回地址之间插入随机值，函数返回前校验</td>
+<td><code>checksec --file=./bin</code> 或 <code>objdump -d</code></td>
+</tr>
+<tr>
+<td><strong>PIE</strong></td>
+<td>程序代码&#x2F;数据段随机</td>
+<td>❌ 无法直接使用硬编码 gadget 地址</td>
+<td>泄露任意代码地址（如 <code>__libc_start_main</code>）</td>
+<td>加载时对 <code>.text</code>、<code>.rodata</code>、<code>.got.plt</code> 等段基址加偏移</td>
+<td><code>readelf -h ./bin | grep Type</code> (ET_DYN)</td>
+</tr>
+<tr>
+<td><strong>ASLR</strong></td>
+<td>内核级地址随机</td>
+<td>❌ libc &#x2F; mmap &#x2F; 栈 &#x2F; 堆 基址变化</td>
+<td>泄露 libc 地址（GOT &#x2F; 函数地址）</td>
+<td>内核随机化 <code>mmap_base</code>、<code>stack_top</code>、<code>brk</code> 起始位置</td>
+<td><code>cat /proc/sys/kernel/randomize_va_space</code></td>
+</tr>
+<tr>
+<td><strong>RELRO</strong></td>
+<td>GOT 表保护</td>
+<td>❌ Full RELRO 时无法修改 GOT</td>
+<td>ROP、hook <code>__free_hook</code> &#x2F; <code>_IO_file_jumps</code></td>
+<td>Partial：只保护 <code>.got</code> 不可写；Full：整个 GOT 只读并重定位</td>
+<td><code>checksec</code> 显示 Partial &#x2F; Full</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、各保护细节与绕过"><a href="#二、各保护细节与绕过" class="headerlink" title="二、各保护细节与绕过"></a>二、各保护细节与绕过</h2><h3 id="1-NX"><a href="#1-NX" class="headerlink" title="1. NX"></a>1. NX</h3><ul>
+<li><strong>检测</strong>：<code>readelf -l ./pwn | grep GNU_STACK</code>，若结果中 <code>RWE</code> 没有 <code>E</code> 代表开启 NX。</li>
+<li><strong>绕过</strong>：<ul>
+<li><strong>ret2libc</strong>：调用 <code>system(&quot;/bin/sh&quot;)</code>，需要 libc 基址。</li>
+<li><strong>ROP</strong>：利用 <code>pop rdi; ret</code> 等 gadget 布置参数。</li>
+<li><strong>JOP &#x2F; COP</strong>：较少用。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Canary"><a href="#2-Canary" class="headerlink" title="2. Canary"></a>2. Canary</h3><ul>
+<li><strong>特征</strong>：函数序言从 <code>fs:0x28</code> 取值放到栈上，结尾校验。</li>
+<li><strong>泄露手法</strong>：<ul>
+<li>覆盖 <code>\x00</code> 绕过（Canary 最低位为 <code>\x00</code>）。</li>
+<li>通过 <code>printf</code>、<code>puts</code> 输出栈上内容（需越界读）。</li>
+<li>逐字节爆破（适用于 fork 型服务，Canary 不变）。</li>
+</ul>
+</li>
+<li><strong>其他绕过</strong>：<ul>
+<li>覆盖 TCB（Thread Control Block）中的 stack_guard。</li>
+<li>通过堆漏洞篡改 <code>__stack_chk_fail</code> 的 GOT 表项（Partial RELRO 时）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-PIE"><a href="#3-PIE" class="headerlink" title="3. PIE"></a>3. PIE</h3><ul>
+<li><strong>检测</strong>：<code>readelf -h ./pwn | grep Type</code>，<code>ET_EXEC</code> 无 PIE，<code>ET_DYN</code> 有 PIE。</li>
+<li><strong>绕过</strong>：<ul>
+<li>泄露任意代码段地址（如 <code>__libc_start_main</code> 的返回地址、函数 GOT 项）。</li>
+<li>利用相对偏移计算基址：<code>base = leaked_addr - offset</code>。</li>
+<li>使用 <code>pwntools</code> 的 <code>ELF()</code> 自动处理。</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-ASLR"><a href="#4-ASLR" class="headerlink" title="4. ASLR"></a>4. ASLR</h3><ul>
+<li><strong>级别</strong>（<code>/proc/sys/kernel/randomize_va_space</code>）：<ul>
+<li><code>0</code>：关闭。</li>
+<li><code>1</code>：栈、库、mmap 随机。</li>
+<li><code>2</code>：额外开启堆随机（brk）。</li>
+</ul>
+</li>
+<li><strong>绕过</strong>：<ul>
+<li>泄露 libc 地址（通过 GOT 泄露、<code>printf</code> 打印等）。</li>
+<li>部分环境可配合 <strong>ret2dlresolve</strong> 不依赖 libc 基址。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-RELRO"><a href="#5-RELRO" class="headerlink" title="5. RELRO"></a>5. RELRO</h3><ul>
+<li><strong>Partial RELRO</strong>：<code>.got</code> 可写，<code>.got.plt</code> 只读（默认情况）。<ul>
+<li>利用：直接修改 GOT 表项为 <code>system</code> 或 <code>one_gadget</code>。</li>
+</ul>
+</li>
+<li><strong>Full RELRO</strong>：整个 GOT 只读，且所有函数在加载时已重定位。<ul>
+<li>利用：无法改 GOT，需纯 ROP 或 hook 其他函数指针（<code>__free_hook</code>、<code>__malloc_hook</code>、<code>_IO_2_1_stdout_</code> 的 vtable）。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="三、组合攻击链"><a href="#三、组合攻击链" class="headerlink" title="三、组合攻击链"></a>三、组合攻击链</h2><table>
+<thead>
+<tr>
+<th>保护组合</th>
+<th>攻击方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>仅 NX</td>
+<td>ret2libc（需要 libc 基址已知）</td>
+</tr>
+<tr>
+<td>NX + ASLR</td>
+<td>泄露 libc 地址 + ret2libc</td>
+</tr>
+<tr>
+<td>NX + ASLR + PIE + Canary</td>
+<td>需泄露 PIE 基址 + Canary + libc 基址，ROP</td>
+</tr>
+<tr>
+<td>Full RELRO + NX + ASLR + PIE</td>
+<td>只能 ROP，无法改 GOT，更依赖 gadget 链</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>通用步骤</strong>：  </p>
+<ol>
+<li>泄露 → 2. 计算基址 → 3. 构造 ROP &#x2F; 劫持控制流 → 4. getshell</li>
+</ol>
+</blockquote>
+<hr>
+<h2 id="四、检测命令"><a href="#四、检测命令" class="headerlink" title="四、检测命令"></a>四、检测命令</h2><pre><code class="language-bash"># 1. 一键查看所有保护（推荐）
+checksec --file=./pwn
+
+# 2. 手动检查 NX
+readelf -l ./pwn | grep GNU_STACK
+# 若结果中没有 E（Execute）则表示 NX 开启
+
+# 3. 检查 PIE
+readelf -h ./pwn | grep Type
+# ET_DYN → PIE 开启；ET_EXEC → 关闭
+
+# 4. 检查 RELRO 类型
+readelf -S ./pwn | grep relro
+# .got.plt 在 RELRO 段 → Partial；.got 也在内 → Full
+
+# 5. 查看系统 ASLR 级别
+cat /proc/sys/kernel/randomize_va_space
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

